@@ -1,0 +1,16 @@
+{% extends 'layout.html' %}{% block content %}<h2 class="title">Phòng: {{ show.room }} • {{ show.start_time }}</h2><p>Giá: {{ "{:,}".format(show.price) }}đ/ghế • A=Trống, H=Giữ, S=Đã bán</p>
+<form id="seatForm"><input type="hidden" name="show_code" value="{{ show.code }}"><div class="grid" style="--rows: {{ show.rows }}; --cols: {{ show.cols }};">{% for row_label,row_seats in rows %}{% for sid in row_seats %}<label class="seat {{ 'sold' if seat_map[sid]=='S' else ('held' if seat_map[sid]=='H' else '') }}"><input type="checkbox" name="seats" value="{{ sid }}" {% if seat_map[sid] != 'A' %}disabled{% endif %}>{{ sid }}</label>{% endfor %}{% endfor %}</div>
+<div class="actions"><button type="button" id="holdBtn" class="btn">Giữ ghế</button><button type="button" id="releaseBtn" class="btn outline">Hủy giữ</button><button type="button" id="confirmBtn" class="btn success">Xác nhận mua</button><a class="btn warn" href="{{ url_for('checkout', code=show.code) }}">Thanh toán (Mock)</a></div></form>
+<script>
+const socket = io();
+socket.emit("join_show", {show_code: "{{ show.code }}"});
+socket.on("seat_held", d => { if(d.show_code=== "{{ show.code }}"){ location.reload(); } });
+socket.on("seat_released", d => { if(d.show_code=== "{{ show.code }}"){ location.reload(); } });
+socket.on("seat_sold", d => { if(d.show_code=== "{{ show.code }}"){ location.reload(); } });
+async function post(url, form){ const fd=new FormData(form); const r=await fetch(url,{method:'POST',body:fd}); return r.json(); }
+const form = document.getElementById('seatForm');
+document.getElementById('holdBtn').onclick = async () => { const d = await post('/api/hold', form); alert('Giữ: '+JSON.stringify(d)); };
+document.getElementById('releaseBtn').onclick = async ()=> { const d = await post('/api/release', form); alert('Hủy: '+JSON.stringify(d)); };
+document.getElementById('confirmBtn').onclick = async ()=> { const d = await post('/api/confirm', form); alert('Mua: '+JSON.stringify(d)); };
+window.addEventListener('beforeunload', ()=>{ socket.emit('leave_show',{show_code:"{{ show.code }}" }); });
+</script>{% endblock %}
