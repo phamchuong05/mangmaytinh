@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Real-time Chat App</title>
+  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+  <div class="container">
+    
+    <div id="auth-ui" class="auth-ui">
+        <div class="auth-form">
+            <h2>Đăng nhập</h2>
+            <div id="avatar-section" class="hidden">
+                <img id="avatar-preview" src="#" alt="Avatar Preview" style="display:none;">
+                <label for="avatar-file-input" class="custom-file-upload">
+                    Chọn ảnh đại diện
+                </label>
+                <input type="file" id="avatar-file-input" name="avatar" accept="image/*">
+            </div>
+            <input id="auth-username" type="text" placeholder="Tên tài khoản" required>
+            <input id="auth-password" type="password" placeholder="Mật khẩu" required>
+            <button id="auth-button">Đăng nhập</button>
+            <p id="auth-status" class="auth-status"></p>
+            <div class="auth-toggle">
+                Bạn chưa có tài khoản? <a href="#" id="toggle-auth">Đăng ký</a>
+            </div>
+        </div>
+    </div>
+
+    <div id="lobby-ui" class="lobby-ui hidden">
+        <div class="room-list-header">
+            <h2>Phòng chat</h2>
+            <button id="refresh-rooms" class="refresh-btn"><i class="fas fa-sync-alt"></i></button>
+        </div>
+        <ul id="room-list" class="room-list"></ul>
+        <form id="join-room-form" class="join-room-form">
+            <input id="room-input" autocomplete="off" placeholder="Tên phòng mới...">
+            <button type="submit">Tạo & Tham gia</button>
+        </form>
+    </div>
+
+    <div id="chat-ui" class="chat-ui hidden">
+        <div class="chat-header">
+            <i class="fas fa-arrow-left back-to-lobby"></i>
+            <span id="room-title"></span>
+        </div>
+        <ul id="messages" class="chat-messages"></ul>
+        <form id="form" class="chat-input-form">
+            <input id="input" autocomplete="off" placeholder="Nhắn tin...">
+            <button type="submit"><i class="fas fa-paper-plane"></i></button>
+        </form>
+    </div>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/client.js"></script>
+</body>
+</html>
