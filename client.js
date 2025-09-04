@@ -3,7 +3,6 @@ const socket = io();
 const authUi = document.getElementById('auth-ui');
 const lobbyUi = document.getElementById('lobby-ui');
 const chatUi = document.getElementById('chat-ui');
-
 const authUsernameInput = document.getElementById('auth-username');
 const authPasswordInput = document.getElementById('auth-password');
 const avatarSection = document.getElementById('avatar-section');
@@ -12,7 +11,6 @@ const avatarPreview = document.getElementById('avatar-preview');
 const authButton = document.getElementById('auth-button');
 const authToggle = document.getElementById('toggle-auth');
 const authStatus = document.getElementById('auth-status');
-
 const roomList = document.getElementById('room-list');
 const refreshRoomsBtn = document.getElementById('refresh-rooms');
 const roomInput = document.getElementById('room-input');
@@ -64,7 +62,6 @@ function appendMessage(data) {
     } else {
       item.classList.add('other');
     }
-    
     const avatar = document.createElement('img');
     avatar.src = data.avatar;
     avatar.classList.add('avatar');
@@ -236,6 +233,6 @@ socket.on('chat message', (data) => {
   scrollToBottom();
 });
 
-
 // Bắt đầu ứng dụng
+
 showAuthUI();
