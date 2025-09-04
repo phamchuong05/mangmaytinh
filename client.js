@@ -236,3 +236,4 @@ socket.on('chat message', (data) => {
 // Bắt đầu ứng dụng
 
 showAuthUI();
+
