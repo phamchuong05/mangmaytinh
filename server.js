@@ -11,6 +11,7 @@ const server = http.createServer(app);
 const io = new Server(server);
 
 // Configure multer for file uploads
+
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         cb(null, 'public/uploads/');
@@ -28,6 +29,7 @@ const usersFilePath = path.join(__dirname, 'users.json');
 const rooms = {}; // Object để lưu trữ các phòng và lịch sử tin nhắn
 
 // Hàm để tải dữ liệu người dùng
+
 const loadUsers = () => {
     if (fs.existsSync(usersFilePath)) {
         const data = fs.readFileSync(usersFilePath, 'utf8');
@@ -37,6 +39,7 @@ const loadUsers = () => {
 };
 
 // Hàm để lưu dữ liệu người dùng
+
 const saveUsers = (users) => {
     fs.writeFileSync(usersFilePath, JSON.stringify(users, null, 2), 'utf8');
 };
@@ -79,6 +82,7 @@ io.on('connection', (socket) => {
     });
 
     // Xử lý đăng nhập
+    
     socket.on('login', async (data) => {
         const { username, password } = data;
         const user = users[username];
@@ -93,11 +97,13 @@ io.on('connection', (socket) => {
     });
 
     // Xử lý yêu cầu danh sách phòng
+    
     socket.on('room_list', () => {
         socket.emit('room_list', Object.keys(rooms));
     });
 
     // Xử lý tham gia phòng chat
+    
     socket.on('join_room', (roomName) => {
         if (socket.currentRoom) {
             socket.leave(socket.currentRoom);
@@ -119,6 +125,7 @@ io.on('connection', (socket) => {
     });
 
     // Xử lý tin nhắn chat
+    
     socket.on('chat message', (msg) => {
         const messageData = {
             sender: socket.username,
@@ -131,6 +138,7 @@ io.on('connection', (socket) => {
     });
 
     // Xử lý khi người dùng ngắt kết nối
+    
     socket.on('disconnect', () => {
         console.log(`User disconnected: ${socket.id}`);
         if (socket.currentRoom) {
@@ -144,6 +152,7 @@ server.listen(3000, () => {
 });
 
 // Tạo thư mục public và uploads nếu chúng chưa tồn tại
+
 if (!fs.existsSync('public')) {
     fs.mkdirSync('public');
 }
