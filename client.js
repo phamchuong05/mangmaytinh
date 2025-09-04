@@ -90,7 +90,6 @@ function appendMessage(data) {
   messages.appendChild(item);
   scrollToBottom();
 }
-
 // Xử lý sự kiện Auth
 authToggle.addEventListener('click', () => {
   isRegisterMode = !isRegisterMode;
@@ -178,7 +177,6 @@ socket.on('login_status', (data) => {
     authStatus.classList.add('error');
   }
 });
-
 // Xử lý sự kiện Lobby
 socket.on('room_list', (rooms) => {
   roomList.innerHTML = '';
@@ -205,7 +203,6 @@ joinRoomForm.addEventListener('submit', (e) => {
     roomInput.value = '';
   }
 });
-
 // Xử lý sự kiện Chat
 socket.on('room_joined', (data) => {
   currentRoom = data.roomName;
@@ -230,7 +227,6 @@ form.addEventListener('submit', (e) => {
     input.value = '';
   }
 });
-
 socket.on('chat message', (data) => {
   appendMessage(data);
   scrollToBottom();
@@ -238,4 +234,5 @@ socket.on('chat message', (data) => {
 
 
 // Bắt đầu ứng dụng
+
 showAuthUI();
