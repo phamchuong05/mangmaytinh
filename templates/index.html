@@ -1,1 +1,0 @@
-{% extends 'layout.html' %}{% block content %}<h1 class="title">Danh sách phim</h1><div class="cards">{% for m in movies %}<div class="card"><h3>{{ m.title }}</h3><p>Rated: {{ m.rating }}</p><a class="btn" href="{{ url_for('movie_view', code=m.code) }}">Xem suất chiếu</a></div>{% endfor %}</div>{% endblock %}

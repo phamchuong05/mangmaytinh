@@ -1,1 +1,0 @@
-{% extends 'layout.html' %}{% block content %}<h2 class="title">Đăng ký</h2><form method="post" class="form"><label>Tên đăng nhập <input name="username" required></label><label>Mật khẩu <input type="password" name="password" required></label><button class="btn">Tạo tài khoản</button></form><p>Đã có tài khoản? <a href="{{ url_for('login') }}">Đăng nhập</a></p>{% endblock %}
